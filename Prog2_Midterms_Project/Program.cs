@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.CodeDom;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -107,8 +108,8 @@ namespace Prog2_Midterms_Project
                 }
 
                 Console.Clear();
-                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t      You're mind is still hazy from what happened");
-                Console.Write("\t\t\t\t             Then, something comes into mind");
+                Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t      Your mind is still hazy from what happened");
+                Console.Write("\t\t\t\t           Then, something comes into mind");
                 Console.ReadKey();
                 Console.Clear();
             }
@@ -132,7 +133,8 @@ namespace Prog2_Midterms_Project
                 Console.Write("\n\n\n\n\n\n\n\n\t\t\t\t\t\t       It was a....");
                 Console.WriteLine("\n\n\t\t\t\t       [Sword]  [Dagger]  [Grimoire]  [Holy Staff]");
                 Console.WriteLine("\n\n\t\t\t\t*Keep in mind that each weapon will yield different stats*");
-                Console.WriteLine("\t\t\t\t  (Please type the weapon name below to view the details)");
+                Console.WriteLine("\t\t\t\t   *RECOMMENDED TO USE SWORD FOR BEGINNER's EXPERIENCE*");
+                Console.WriteLine("\n\t\t\t\t  (Please type the weapon name below to view the details)");
                 Console.Write("\n\n\t\t\t\t\t\t     Response: ");
                 input = Console.ReadLine().ToLower();
 
@@ -313,7 +315,7 @@ namespace Prog2_Midterms_Project
                 if (confirm != true)
                 {
                     Console.Clear();
-                    Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\tYou're mind is still hazy from what happened...");
+                    Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t\tYour mind is still hazy from what happened...");
                     Console.Write("\n\t\t\t              [Clara]: Hello??? Are you goin' to get it or what?");
                     Console.ReadKey();
                 }
@@ -485,7 +487,7 @@ namespace Prog2_Midterms_Project
                 if (tutorial)
                 {
                     Console.Clear();
-                    Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t        You're mind is still hazy from what happened");
+                    Console.WriteLine("\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t\t        Your mind is still hazy from what happened");
                     Console.Write("\t\t\t\t[Clara]: OMG, I'm getting sick of this! Will you just answer?");
                     Console.ReadKey();
                 }
@@ -680,7 +682,10 @@ namespace Prog2_Midterms_Project
                     {
                         if (enemyCurrentHP < enemy["HP"] / 7)
                         {
+                            Console.ForegroundColor = ConsoleColor.DarkBlue;
+
                             Console.ForegroundColor = ConsoleColor.DarkGray;
+
                             Console.Write("█");
                         }
                         else
@@ -800,6 +805,12 @@ namespace Prog2_Midterms_Project
 
                                             break;
                                         }
+                                        
+                                    }
+                                    else
+                                    {
+                                        Console.Write("\n\t\tYour brain is feeling fuzzy. You need to concentrate.");
+                                        Console.ReadKey();
                                     }
 
                                     Console.Clear();
@@ -861,6 +872,13 @@ namespace Prog2_Midterms_Project
                                 battle = false;
                                 endGame = true;
 
+                                break;
+                            
+                            default:
+                                
+                                Console.Write("\n\t\t\t\t   Your brain is feeling fuzzy. You need to concentrate.");
+                                Console.ReadKey();
+                                
                                 break;
 
                         }
@@ -1055,4 +1073,3 @@ namespace Prog2_Midterms_Project
         }
     }
 }
-
