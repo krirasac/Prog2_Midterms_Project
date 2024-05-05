@@ -435,35 +435,35 @@ namespace Prog2_Midterms_Project
                             Console.ReadKey();
 
                             Console.Clear();
-                            Console.WriteLine("\n\n\n\n\t\tAt the start of each round, there are two status windows, one for you and the enemy");
-                            Console.WriteLine("\t\tWith each displaying your respective stats.");
+                            Console.WriteLine("\n\n\n\n\t\tAt the start of each round, there are two status windows: one for you and the enemy");
+                            Console.WriteLine("\t\twith each displaying your respective stats.");
 
                             Console.WriteLine($"\n\n\t\t\t\t\t\t[???] {playerName}'s Stats\t");
                             Console.WriteLine("\t\t\t\t----------------------------------------------------------");
-                            Console.Write($"\n\t\t\t\t HP: ???/???  ");
-                            Console.Write($"\n\t\t\t\t MP: ???/???  ");
+                            Console.Write($"\n\t\t\t\t HP: ???/??? ██████████████████████████████████ ");
+                            Console.Write($"\n\t\t\t\t MP: ???/??? ██████████████████████████████████ ");
                             Console.ResetColor();
                             Console.WriteLine($"\n\n\t\t\t\t\t     ATK: ???       DEF:???       SPD: ???");
                             Console.WriteLine("\t\t\t\t----------------------------------------------------------");
                             Console.WriteLine();
                             Console.WriteLine($"\t\t\t\t\t\t[ENEMY] ????'s Stats\t");
                             Console.WriteLine("\t\t\t\t----------------------------------------------------------");
-                            Console.Write($"\n\t\t\t\t HP: ???/???  ");
+                            Console.Write($"\n\t\t\t\t HP: ???/??? ███████████████████████████████████ ");
                             Console.ResetColor();
                             Console.WriteLine($"\n\n\t\t\t\t    ATK: ???     DEF: ???     SPD: ???     ACC.: ???%-???%");
                             Console.Write("\t\t\t\t----------------------------------------------------------");
                             Console.ReadKey();
 
                             Console.Clear();
-                            Console.WriteLine("\n\n\n\n\t\tAt the start your turn you have to type down one of the three options:");
+                            Console.WriteLine("\n\n\n\n\t\tAt the start of your turn, you have the option to type down one of the three choices:");
                             Console.Write("\n\t\t[Attack]: Will lead you to your list of moves, alongside their corresponding stats.");
                             
-                            Console.WriteLine("\n\t\t           Type in the attack name. But make sure that you have enough MP to be able " +
+                            Console.WriteLine("\n\t\t           Type in the correct attack name while making sure that you have enough MP to be able " +
                                 "\n\t\t           to attack the opponents. MP will regenerate but only after you defeat " +
                                 "\n\t\t           the enemy.");
 
                             Console.WriteLine("\n\t\t           Keep in mind that having high ACCURACY will land you a hit and having " +
-                                "\n\t\t           high SPD will make it easier to land a CRIT HIT and double the damage " +
+                                "\n\t\t           high SPD will make it easier to land a CRIT HIT and doubles the damage " +
                                 "\n\t\t           to the enemy.");
 
                             Console.WriteLine("\n\t\t[Heal]: Will randomly regenerate your lost HP, but will make you lose a turn.");
@@ -527,7 +527,7 @@ namespace Prog2_Midterms_Project
                 enemyCurrentHP = enemy["HP"];
 
                 //ATK
-                chance = currentHP + stats["ATK"];
+                chance = (currentHP + stats["ATK"]) / 10;
                 baseStat = rnd.Next(7, 16) * 10;
 
                 if (chance % 10 >= 7)
@@ -544,7 +544,7 @@ namespace Prog2_Midterms_Project
                 }
 
                 //DEF
-                chance = currentHP + stats["DEF"];
+                chance = (currentHP + stats["DEF"]) / 10;
                 baseStat = rnd.Next(7, 16) * 10;
 
                 if (chance % 10 >= 7)
@@ -561,7 +561,7 @@ namespace Prog2_Midterms_Project
                 }
 
                 //SPD
-                chance = currentHP + stats["SPD"];
+                chance = (currentHP + stats["SPD"]) / 10;
                 baseStat = rnd.Next(6, 9) * 10;
 
                 if (chance % 10 >= 7)
@@ -620,32 +620,50 @@ namespace Prog2_Midterms_Project
                 Console.ReadKey();
                 Console.Clear();
 
+
                 while (battle == true && level < 4)
                 {
+                    Console.ReadKey();
                     Console.WriteLine($"\n\n\t\t\t\t\t\t         Level  [{level}]\n\n");
                     Console.WriteLine($"\t\t\t\t\t\t[{title}] {playerName}'s Stats\t");
                     Console.WriteLine("\t\t\t\t----------------------------------------------------------");
                     Console.Write($"\n\t\t\t\t HP: {currentHP}/{stats["HP"]}  ");
 
-                    for (int i = 0; i < (currentHP / 7); i++)
+                    for (int i = 0; i < (currentHP / 5); i++)
                     {
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.Write("█");
+                        if (currentHP < stats["HP"] / 8)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Magenta;
+                            Console.Write("█");
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.Write("█");
+                        }
 
-                        if (i > 25)
+                        if (i > 37)
                         {
                             break;
-
                         }
+
                     }
 
                     Console.ResetColor();
                     Console.Write($"\n\t\t\t\t MP: {currentMP}/{stats["MP"]}  ");
 
-                    for (int i = 0; i < (currentMP / 7); i++)
+                    for (int i = 0; i < (currentMP / 5); i++)
                     {
-                        Console.ForegroundColor = ConsoleColor.Cyan;
-                        Console.Write("█");
+                        if (currentMP < stats["MP"] / 7)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Magenta;
+                            Console.Write("█");
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.Write("█");
+                        }
                     }
 
                     Console.ResetColor();
@@ -658,23 +676,30 @@ namespace Prog2_Midterms_Project
                     Console.WriteLine("\t\t\t\t----------------------------------------------------------");
                     Console.Write($"\n\t\t\t\t HP: {enemyCurrentHP}/{enemy["HP"]}  ");
 
-                    for (int i = 0; i < (enemyCurrentHP / 7); i++)
+                    for (int i = 0; i < (enemyCurrentHP / 5); i++)
                     {
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.Write("█");
+                        if (enemyCurrentHP < enemy["HP"] / 7)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkGray;
+                            Console.Write("█");
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.Write("█");
+                        }
 
-                        if (i > 25)
+                        if (i > 37)
                         {
                             break;
-
                         }
+
                     }
 
                     Console.ResetColor();
                     Console.WriteLine($"\n\n\t\t\t\t    ATK: {enemy["ATK"]}     DEF:{enemy["DEF"]}     SPD: {enemy["SPD"]}     ACC.: {lowestChance}%-{highestChance}%");
                     Console.Write("\t\t\t\t----------------------------------------------------------");
-                    Console.ReadKey();
-
+                    
                     if (playerTurn == true)
                     {
                         Console.WriteLine("\n\n\t\t\t\t\t\tWhat would you like to do?");
@@ -695,10 +720,18 @@ namespace Prog2_Midterms_Project
                                     Console.WriteLine($"\n\n\n\n\t\t[{title}] {playerName}'s MOVE SET");
                                     Console.Write($"\n\t\tMP:\t{currentMP}/{stats["MP"]}  ");
 
-                                    for (int i = 0; i < (currentMP / 7); i++)
+                                    for (int i = 0; i < (currentMP / 5); i++)
                                     {
-                                        Console.ForegroundColor = ConsoleColor.Cyan;
-                                        Console.Write("█");
+                                        if (currentMP < stats["MP"] / 7)
+                                        {
+                                            Console.ForegroundColor = ConsoleColor.Magenta;
+                                            Console.Write("█");
+                                        }
+                                        else
+                                        {
+                                            Console.ForegroundColor = ConsoleColor.Cyan;
+                                            Console.Write("█");
+                                        }
                                     }
 
                                     Console.ResetColor();
