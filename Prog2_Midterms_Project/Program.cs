@@ -2,6 +2,7 @@ using System;
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -21,10 +22,10 @@ namespace Prog2_Midterms_Project
             bool playerTurn = true, enemyTurn = false;
 
             //general info
-            int chance;
+            int chance, totalDMG = 0;
             string input, role = "", info = "";
             bool classSelect = false, confirm = false, tutorial = true;
-            List<string> weapon = new List<string> { "sword", "dagger", "grimoire", "holy staff"};
+            List<string> weapon = new List<string> { "sword", "dagger", "grimoire", "holy staff" };
 
 
             //player stats
@@ -125,7 +126,7 @@ namespace Prog2_Midterms_Project
             Console.Clear();
 
             //getting the stats of the player
-            
+
             while (confirm == false)
             {
                 classSelect = false;
@@ -459,7 +460,7 @@ namespace Prog2_Midterms_Project
                             Console.Clear();
                             Console.WriteLine("\n\n\n\n\t\tAt the start of your turn, you have the option to type down one of the three choices:");
                             Console.Write("\n\t\t[Attack]: Will lead you to your list of moves, alongside their corresponding stats.");
-                            
+
                             Console.WriteLine("\n\t\t           Type in the correct attack name while making sure that you have enough MP to be able " +
                                 "\n\t\t           to attack the opponents. MP will regenerate but only after you defeat " +
                                 "\n\t\t           the enemy.");
@@ -475,7 +476,7 @@ namespace Prog2_Midterms_Project
                             Console.ReadKey();
                             Console.Clear();
                             Console.Write("\n\n\n\n\n\n\n\n\n\n\n\n\n\t\t\t   [Clara]: Well, you got that? Good. Now go on and fight the big baddie!!");
-                            
+
                             tutorial = false;
                             Console.ReadKey();
 
@@ -501,7 +502,7 @@ namespace Prog2_Midterms_Project
             {
                 Console.WriteLine($"\n\n\n\n\n\n\n\n\t\t\t\t\t\t\t LEVEL {level}");
                 Console.Write($"\n\t\t\t\t\t\t\t  START!");
-                
+
                 //generate enemy stats
                 //Basic ATK base
                 enemyMove[0] = new int[2]; enemyMove[0][0] = (rnd.Next(6, 10)) * 10;
@@ -511,7 +512,7 @@ namespace Prog2_Midterms_Project
                 enemyMove[2] = new int[2]; enemyMove[2][0] = (rnd.Next(10, 14)) * 10;
 
                 //HP
-                baseStat = rnd.Next(28,36) * 10;
+                baseStat = rnd.Next(28, 36) * 10;
 
                 if (currentHP % 10 >= 7)
                 {
@@ -609,7 +610,7 @@ namespace Prog2_Midterms_Project
                         {
                             lowestChance = enemyMove[x][1];
                         }
-                    
+
                         if (highestChance < lowestChance)
                         {
                             int temp = lowestChance;
@@ -683,9 +684,6 @@ namespace Prog2_Midterms_Project
                         if (enemyCurrentHP < enemy["HP"] / 7)
                         {
                             Console.ForegroundColor = ConsoleColor.DarkBlue;
-
-                            Console.ForegroundColor = ConsoleColor.DarkGray;
-
                             Console.Write("█");
                         }
                         else
@@ -704,7 +702,7 @@ namespace Prog2_Midterms_Project
                     Console.ResetColor();
                     Console.WriteLine($"\n\n\t\t\t\t    ATK: {enemy["ATK"]}     DEF:{enemy["DEF"]}     SPD: {enemy["SPD"]}     ACC.: {lowestChance}%-{highestChance}%");
                     Console.Write("\t\t\t\t----------------------------------------------------------");
-                    
+
                     if (playerTurn == true)
                     {
                         Console.WriteLine("\n\n\t\t\t\t\t\tWhat would you like to do?");
@@ -805,7 +803,7 @@ namespace Prog2_Midterms_Project
 
                                             break;
                                         }
-                                        
+
                                     }
                                     else
                                     {
@@ -824,7 +822,7 @@ namespace Prog2_Midterms_Project
 
                             case "heal":
 
-                                restore = (int)(rnd.Next(stats["HP"]-currentHP) * (.5 + buff));
+                                restore = (int)(rnd.Next(stats["HP"] - currentHP) * (.5 + buff));
 
                                 Console.Clear();
                                 Console.WriteLine("\n\n\n\n\n\t\t\t\t\t\t        _____" +
@@ -873,12 +871,12 @@ namespace Prog2_Midterms_Project
                                 endGame = true;
 
                                 break;
-                            
+
                             default:
-                                
+
                                 Console.Write("\n\t\t\t\t   Your brain is feeling fuzzy. You need to concentrate.");
                                 Console.ReadKey();
-                                
+
                                 break;
 
                         }
@@ -926,7 +924,7 @@ namespace Prog2_Midterms_Project
                             "\r\n\t\t\t\t/   -_- _ -             _- _---                       -_-  -_ \\");
                             Console.Write("\n\n\t\t\t\t    You have eliminated the enemy. Press any key to continue!");
 
-                            
+
                             enemyCurrentHP = enemy["HP"];
                             currentMP += (int)((stats["MP"] - currentMP) * (.2 + mpRestore));
 
@@ -989,10 +987,12 @@ namespace Prog2_Midterms_Project
 
                             enemyTurn = false;
                             playerTurn = true;
+                            int hits = enemy["HP"] - enemyCurrentHP;
+                            totalDMG += hits;
 
                             Console.ReadKey();
                         }
-                        
+
                     }
 
                     //if it happened during turn
@@ -1004,7 +1004,7 @@ namespace Prog2_Midterms_Project
 
                     Console.Clear();
                 }
-                
+
                 Console.Clear();
             }
 
@@ -1030,7 +1030,7 @@ namespace Prog2_Midterms_Project
                     "\r\n\t\t\t\t   |_________|___________|-------------------|___________|_________|");
                 Console.WriteLine("\n\t\t\t\t\t     Congratulations! You have defeated the Evil Warlord! " +
                     "\n\t\t\t\t\t              Now, everyone can live peacefully.\n\n");
-                
+
             }
             else if (currentHP < 0)
             {
@@ -1069,7 +1069,49 @@ namespace Prog2_Midterms_Project
 
             }
 
+            Console.ReadKey();
+            Console.Clear();
+
+            //stores the score
+            List <string> score = new List<string>();
+
+            //reads the record from the file
+            using (StreamReader sr = new StreamReader("scoreboard.txt"))
+            {
+                string player = "";
+
+                while ((player = sr.ReadLine()) != null)
+                {
+                    score.Add(player);  
+                }
+            }
+
+            //displays the scores
+            Console.WriteLine("\n\n\n\n\n\t\t\t\t\t\t\tSCOREBOARD");
+
+            for (int x = 0; x < score.Count; x++)
+            {
+                Console.WriteLine($"\n\n\t\t\t\t\t\t\t{x+1}. {score[x]}");
+            }
+
+            //adds in the latest score
+            using (StreamWriter sw = new StreamWriter("scoreboard.txt", true))
+            {
+                //computation of the score
+                int num = ((currentHP) * (round)) + totalDMG;
+
+                if (totalDMG == 0 && input == "flee")
+                {
+                    num = 0;
+                }
+
+                sw.WriteLine($"{playerName} - {num}");
+
+                Console.WriteLine($"\n\n\n\t\t\t\t\t\tLatest Score: {playerName} - {num}");
+            }
+
             Console.Write("\t\t\t\t\t\t");
+            Console.ReadKey();
         }
     }
 }
